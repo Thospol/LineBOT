@@ -35,6 +35,7 @@ func main() {
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
+
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
 			w.WriteHeader(400)
@@ -49,6 +50,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
+				message.Text = "สวัสดีครับ"
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 					log.Print(err)
 				}
