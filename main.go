@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -13,6 +14,7 @@ var (
 	channelSecret      = "198e00458c411f2c50aa19beaa94851d"
 	channelAccsssToken = "2A3RczSVO44rsUJvAdd8utWfhOyELWeMVnIQ5IVDC6A9sCjSxFhcf5K1u/KuanMNDIl91oJGxV7SLivTSmRNW9jqz1fVtAEwC4Y7sFfhj2rHioE7uHVJaXDny55T+WXYOV4qQ2gubjAG7rsIVFUUTAdB04t89/1O/w1cDnyilFU="
 )
+var recentId string
 
 func main() {
 
@@ -24,6 +26,8 @@ func main() {
 	}
 
 	http.HandleFunc("/", handler)
+	http.HandleFunc("/push", pushMessage)
+
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
@@ -40,6 +44,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	for _, event := range events {
+		fmt.Println(event.Source.UserID)
+		recentId = event.Source.UserID
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
@@ -49,4 +55,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+}
+
+func pushMessage(w http.ResponseWriter, r *http.Request) {
+	msg := linebot.NewTextMessage("Test")
+	bot.PushMessage(recentId, msg)
 }
