@@ -10,9 +10,8 @@ import (
 
 var (
 	bot                *linebot.Client
-	client             = &http.Client{}
-	channelSecret      = "7e602176049bb7bad6058a89cf0a4df1"
-	channelAccsssToken = "gg35kI4YEqjkxhxyiMTlU6Mx7sFJHwi5iR5WPKV2mshDnUAJzQjWZwzknFnNRVOUDIl91oJGxV7SLivTSmRNW9jqz1fVtAEwC4Y7sFfhj2rB9qqYWMdvXQOq6L03ceChaAcgI+o+zUNT8ae8nxEvPwdB04t89/1O/w1cDnyilFU="
+	channelSecret      = "198e00458c411f2c50aa19beaa94851d"
+	channelAccsssToken = "2A3RczSVO44rsUJvAdd8utWfhOyELWeMVnIQ5IVDC6A9sCjSxFhcf5K1u/KuanMNDIl91oJGxV7SLivTSmRNW9jqz1fVtAEwC4Y7sFfhj2rHioE7uHVJaXDny55T+WXYOV4qQ2gubjAG7rsIVFUUTAdB04t89/1O/w1cDnyilFU="
 )
 
 func main() {
@@ -23,7 +22,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	http.HandleFunc("/callback", handler)
+
+	http.HandleFunc("/", handler)
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
@@ -43,7 +43,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				message.Text = "hello"
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 					log.Print(err)
 				}
