@@ -13,8 +13,8 @@ var (
 	bot                *linebot.Client
 	channelSecret      = "198e00458c411f2c50aa19beaa94851d"
 	channelAccsssToken = "2A3RczSVO44rsUJvAdd8utWfhOyELWeMVnIQ5IVDC6A9sCjSxFhcf5K1u/KuanMNDIl91oJGxV7SLivTSmRNW9jqz1fVtAEwC4Y7sFfhj2rHioE7uHVJaXDny55T+WXYOV4qQ2gubjAG7rsIVFUUTAdB04t89/1O/w1cDnyilFU="
+	recentId           string
 )
-var recentId string
 
 func main() {
 
@@ -25,7 +25,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", handler) // webhoook
 	http.HandleFunc("/push", pushMessage)
 
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
