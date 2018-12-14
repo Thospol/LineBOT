@@ -59,5 +59,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func pushMessage(w http.ResponseWriter, r *http.Request) {
 	msg := linebot.NewTextMessage("Test")
-	bot.PushMessage(recentId, msg)
+	bot.PushMessage(recentId, msg).Do()
 }
