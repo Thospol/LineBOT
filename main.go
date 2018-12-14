@@ -50,9 +50,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				message.Text = "สวัสดีครับ"
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
-					log.Print(err)
+				if message.Text == "ดีครับ" {
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("สวัสดีครับ :)")).Do(); err != nil {
+						log.Print(err)
+					}
+				}
+				if message.Text == "ชื่อไลครับ" {
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("หมัด ทศพล ครับ :)")).Do(); err != nil {
+						log.Print(err)
+					}
 				}
 			}
 		}
