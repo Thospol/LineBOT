@@ -32,7 +32,7 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Sprintf("Hi Bot.")
+	fmt.Sprintf("Hi, %s ", "Bot")
 	events, err := bot.ParseRequest(r)
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
