@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -31,6 +32,7 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Sprintf("Hi Bot.")
 	events, err := bot.ParseRequest(r)
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
@@ -51,7 +53,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
-	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
 func respondWithError(w http.ResponseWriter, code int, msg string) {
